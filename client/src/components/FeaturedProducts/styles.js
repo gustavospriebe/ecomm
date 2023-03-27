@@ -18,11 +18,11 @@ export const FeaturedProductsComponent = styled.div`
             flex: 3;
             color: gray;
         }
-
-        .bottom {
-            display: flex;
-            justify-content: center; 
-            gap: 50px;
-        }
+    }
+    .bottom {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        gap: 50px;
     }
 `;

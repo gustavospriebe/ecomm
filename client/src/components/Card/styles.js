@@ -5,6 +5,7 @@ export const CardComponent = styled.div`
     display: flex;
     flex-direction: column;
     gap: 10px;
+    margin-bottom: 50px;
 
     .image {
         width: 100%;
@@ -39,24 +40,26 @@ export const CardComponent = styled.div`
             font-weight: 500;
             font-size: 12px;
         }
+    }
 
-        h2 {
-            font-size: 16px;
-            font-weight: 400;
-        }
+    h2 {
+        font-size: 16px;
+        font-weight: 400;
+    }
 
-        .prices {
-            display: flex;
-            gap: 20px;
+    .prices {
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
 
-            h3 {
-                font-size: 18px;
-                font-weight: 500;
-
-                &:first-child {
-                    color: gray;
-                    text-decoration: line-through;
-                }
+        h3 {
+            font-size: 18px;
+            font-weight: 600;
+            
+            &:first-of-type {
+                font-weight: 400;
+                color: gray;
+                text-decoration: line-through;
             }
         }
     }
