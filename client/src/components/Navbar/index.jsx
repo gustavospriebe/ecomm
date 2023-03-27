@@ -6,8 +6,12 @@ import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import flag from "../../assets/img/en.png";
 import { Link } from "react-router-dom";
 import { NavbarComponent } from "./styles";
+import { useState } from "react";
+import { Cart } from "../Cart";
 
 export function Navbar() {
+    const [openCart, setOpenCart] = useState(false);
+
     return (
         <NavbarComponent>
             <div className="wrapper">
@@ -66,13 +70,17 @@ export function Navbar() {
                         <SearchIcon />
                         <PersonOutlineOutlinedIcon />
                         <FavoriteBorderOutlinedIcon />
-                        <div className="cartIcon">
+                        <div
+                            className="cartIcon"
+                            onClick={() => setOpenCart(!openCart)}
+                        >
                             <ShoppingCartOutlinedIcon />
                             <span>0</span>
                         </div>
                     </div>
                 </div>
             </div>
+            {openCart && <Cart />}
         </NavbarComponent>
     );
 }

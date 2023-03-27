@@ -21,7 +21,10 @@ const data = [
     },
 ];
 
-export function List() {
+export function List({ maxPrice, sortBy, catID }) {
+
+    
+
     return (
         <ListComponent>
             {data?.map((item) => (
