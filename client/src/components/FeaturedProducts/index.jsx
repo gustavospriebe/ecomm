@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FeaturedProductsComponent } from "./styles.js";
 import { Card } from "../Card/index.jsx";
+import axios from "axios";
 
 const data = [
     {
@@ -23,8 +24,32 @@ const data = [
 ];
 
 export function FeaturedProducts() {
-        const loading = false;
-        
+    const loading = false;
+
+    const [products, setProducts] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const data = await axios.get(
+                    import.meta.env.VITE_APP_API_URL + "/products?populate=*",
+                    {
+                        headers: {
+                            Authorization:
+                                "bearer" + import.meta.env.VITE_APP_API_TOKEN,
+                        },
+                    }
+                );
+                setProducts(data.data.data);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+        fetchData();
+    }, []);
+
+    console.log(products);
+
     return (
         <FeaturedProductsComponent>
             <div className="top">
@@ -38,12 +63,15 @@ export function FeaturedProducts() {
             </div>
             <div className="bottom">
                 {
-                // error
-                //     ? "Something went wrong!"
-                //     : 
+                    // error
+                    //     ? "Something went wrong!"
+                    //     :
                     loading
-                    ? "loading"
-                    : data?.map((item) => <Card item={item} key={item.id} />)}
+                        ? "loading"
+                        : products?.map((item) => (
+                            <Card item={item.attributes} key={item.id} />
+                        ))
+                }
             </div>
         </FeaturedProductsComponent>
     );
