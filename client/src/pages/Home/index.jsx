@@ -7,8 +7,9 @@ export function Home() {
     return (
         <div>
             <Slider />
+            <FeaturedProducts type="Featured" />
             <Categories />
-            <FeaturedProducts />
+            <FeaturedProducts type="Trending" />
             <Contact />
         </div>
     );
