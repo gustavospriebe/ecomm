@@ -13,7 +13,7 @@ const data = [
         price: 12,
     },
     {
-        id: 1,
+        id: 2,
         img: "http://images.pexels.com/photos/1972115/pexels-photo-1972115.jpeg?auto=compress&cs=tinysrgb&w=1600",
         img2: "http://images.pexels.com/photos/1163194/pexels-photo-1163194.jpeg?auto=compress&cs=tinysrgb&w=1600",
         title: "Long Sleeve Graphic T-shirt",
