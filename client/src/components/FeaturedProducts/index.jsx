@@ -8,7 +8,6 @@ export function FeaturedProducts({ type }) {
         `/products?populate=*&[filters][type][$eq]=${type}`
     );
 
-
     return (
         <FeaturedProductsComponent>
             <div className="top">
@@ -26,7 +25,7 @@ export function FeaturedProducts({ type }) {
                     : loading
                     ? "loading"
                     : data?.map((item) => (
-                          <Card item={item.attributes} key={item.id} />
+                          <Card item={item} key={item.id} />
                       ))}
             </div>
         </FeaturedProductsComponent>

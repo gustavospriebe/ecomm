@@ -1,20 +1,19 @@
-import { useState } from "react";
-import { ProductComponent } from "./styles";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import BalanceIcon from "@mui/icons-material/Balance";
-import useFetch from "../../hooks/useFetch";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
+import useFetch from "../../hooks/useFetch";
+import { ProductComponent } from "./styles";
 
 const url = "http://localhost:1337";
 
 export function Product() {
     const id = useParams().id;
-    const [selectedImg, setSelectedImg] = useState('img');
+    const [selectedImg, setSelectedImg] = useState("img");
     const [quantity, setQuantity] = useState(1);
 
     const { data, error, loading } = useFetch(`/products/${id}?populate=*`);
-
 
     const img = data?.attributes?.img?.data?.attributes.url;
     const img2 = data?.attributes?.img2?.data?.attributes.url;
@@ -28,29 +27,26 @@ export function Product() {
                 <div className="images">
                     <img
                         src={url + img}
-                        onClick={() => setSelectedImg('img')}
+                        onClick={() => setSelectedImg("img")}
                         alt=""
                     />
                     <img
                         src={url + img2}
-                        onClick={() => setSelectedImg('img2')}
+                        onClick={() => setSelectedImg("img2")}
                         alt=""
                     />
                 </div>
                 <div className="mainImg">
-                    <img src={url + data?.attributes[selectedImg].data?.attributes.url} alt="" />
+                    <img
+                        src={url + (selectedImg === "img" ? img : img2)}
+                        alt=""
+                    />
                 </div>
             </div>
             <div className="right">
-                <h1>sdgasdfg</h1>
-                <span className="price">$200</span>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Nesciunt, recusandae soluta? Consequuntur exercitationem
-                    repellendus velit quo optio praesentium, placeat qui ipsam
-                    cumque alias blanditiis ab pariatur rem reprehenderit hic
-                    eaque?
-                </p>
+                <h1>{data?.attributes?.title}</h1>
+                <span className="price">$ {data?.attributes?.price}</span>
+                <p>{data?.attributes?.description}</p>
                 <div className="quantity">
                     <button
                         onClick={() =>
@@ -91,7 +87,10 @@ export function Product() {
                 </div>
                 <div className="info">
                     <span>Vendor: Polo</span>
-                    <span>Product Type: T-Shirt</span>
+                    <span>
+                        Product Type:{" "}
+                        {data?.attributes?.sub_categories.data[0].attributes.title}
+                    </span>
                     <span>Tag: T-Shirt, Women, Top</span>
                 </div>
                 <hr />
