@@ -3,31 +3,42 @@ import { ProductComponent } from "./styles";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import BalanceIcon from "@mui/icons-material/Balance";
+import useFetch from "../../hooks/useFetch";
+import { useParams } from "react-router-dom";
 
-const images = [
-    "http://images.pexels.com/photos/10026491/pexels-photo-10026491.png?auto=compress&cs=tinysrgb&w=1600&lazy=load",
-    "http://images.pexels.com/photos/12179283/pexels-photo-12179283.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load",
-];
+const url = "http://localhost:1337";
 
 export function Product() {
-    const [selectedImg, setSelectedImg] = useState(0);
+    const id = useParams().id;
+    const [selectedImg, setSelectedImg] = useState('img');
     const [quantity, setQuantity] = useState(1);
+
+    const { data, error, loading } = useFetch(`/products/${id}?populate=*`);
+
+
+    const img = data?.attributes?.img?.data?.attributes.url;
+    const img2 = data?.attributes?.img2?.data?.attributes.url;
+
+    console.log(id);
+    console.log(data);
 
     return (
         <ProductComponent>
             <div className="left">
                 <div className="images">
-                    {images.map((image, index) => (
-                        <img
-                            src={image}
-                            key={index}
-                            onClick={() => setSelectedImg(index)}
-                            alt=""
-                        />
-                    ))}
+                    <img
+                        src={url + img}
+                        onClick={() => setSelectedImg('img')}
+                        alt=""
+                    />
+                    <img
+                        src={url + img2}
+                        onClick={() => setSelectedImg('img2')}
+                        alt=""
+                    />
                 </div>
                 <div className="mainImg">
-                    <img src={images[selectedImg]} alt="" />
+                    <img src={url + data?.attributes[selectedImg].data?.attributes.url} alt="" />
                 </div>
             </div>
             <div className="right">

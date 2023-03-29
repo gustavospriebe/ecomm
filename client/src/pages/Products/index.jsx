@@ -2,31 +2,46 @@ import { useParams } from "react-router-dom";
 import { List } from "../../components/List";
 import { ProductsComponent } from "./styles";
 import { useState } from "react";
+import useFetch from "../../hooks/useFetch";
 
 export function Products() {
     const catID = Number(useParams().id);
-    const [priceMax, setPriceMax] = useState(1000);
-    const [sortBy, setSortBy] = useState(null);
+    const [priceMax, setPriceMax] = useState(100);
+    const [price, setPrice] = useState(50);
+    const [sortBy, setSortBy] = useState("asc");
+    const [selectedSubCat, setSelectedSubCat] = useState([]);
 
-    console.log(sortBy)
+    const { data, loading, error } = useFetch(
+        `/sub-categories?[filters][categories][id][$eq]=${catID}`
+    );
+
+    function handleChange(e) {
+        setSelectedSubCat(
+            e.target.checked
+                ? [...selectedSubCat, e.target.value]
+                : selectedSubCat.filter((item) => item !== e.target.value)
+        );
+    }
 
     return (
         <ProductsComponent>
             <div className="left">
                 <div className="filterItem">
                     <h2>Product Categories</h2>
-                    <div className="inputItem">
-                        <input type="checkbox" value={1} id="1" />
-                        <label htmlFor="1">Shoes</label>
-                    </div>
-                    <div className="inputItem">
-                        <input type="checkbox" value={2} id="2" />
-                        <label htmlFor="2">Skirts</label>
-                    </div>
-                    <div className="inputItem">
-                        <input type="checkbox" value={3} id="3" />
-                        <label htmlFor="3">Coats</label>
-                    </div>
+                    {data.map((item) => (
+                        <div className="inputItem" key={item.id}>
+                            <input
+                                type="checkbox"
+                                value={item.id}
+                                id={item.id}
+                                onChange={handleChange}
+                            />
+                            <label htmlFor={item.id}>
+                                {item.attributes.title.charAt(0).toUpperCase() +
+                                    item.attributes.title.slice(1)}
+                            </label>
+                        </div>
+                    ))}
                 </div>
                 <div className="filterItem">
                     <h2>Filter by price</h2>
@@ -35,10 +50,13 @@ export function Products() {
                         <input
                             type="range"
                             min={0}
-                            max={1000}
-                            onChange={(e) => setPriceMax(e.target.value)}
+                            max={100}
+                            onChange={(e) => setPrice(e.target.value)}
+                            onMouseUp={(e) =>
+                                setPriceMax(parseInt(e.target.value))
+                            }
                         />
-                        <span>{priceMax}</span>
+                        <span>{price}</span>
                     </div>
                 </div>
                 <div className="filterItem">
@@ -71,7 +89,12 @@ export function Products() {
                     src="http://images.pexels.com/photos/1074535/pexels-photo-1074535.jpeg?auto=compress&cs=tinysrgb&w=1600"
                     alt=""
                 />
-                <List catID={catID} priceMax={priceMax} sortBy={sortBy} />
+                <List
+                    catID={catID}
+                    priceMax={priceMax}
+                    sortBy={sortBy}
+                    subCatID={selectedSubCat}
+                />
             </div>
         </ProductsComponent>
     );
