@@ -28,11 +28,13 @@ export function Product() {
                         onClick={() => setSelectedImg("img")}
                         alt=""
                     />
-                    <img
-                        src={import.meta.env.VITE_APP_UPLOAD_URL + img2}
-                        onClick={() => setSelectedImg("img2")}
-                        alt=""
-                    />
+                    {img2 && (
+                        <img
+                            src={import.meta.env.VITE_APP_UPLOAD_URL + img2}
+                            onClick={() => setSelectedImg("img2")}
+                            alt=""
+                        />
+                    )}
                 </div>
                 <div className="mainImg">
                     <img
@@ -46,7 +48,12 @@ export function Product() {
             </div>
             <div className="right">
                 <h1>{data?.attributes?.title}</h1>
-                <span className="price">$ {data?.attributes?.price}</span>
+                <span className="price">
+                    {new Intl.NumberFormat("pt-BR", {
+                        style: "currency",
+                        currency: "USD",
+                    }).format(data?.attributes?.price)}
+                </span>
                 <p>{data?.attributes?.description}</p>
                 <div className="quantity">
                     <button

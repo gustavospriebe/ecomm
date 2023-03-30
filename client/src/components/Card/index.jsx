@@ -28,9 +28,17 @@ export function Card({ item }) {
                 <h2>{attributesPath.title}</h2>
                 <div className="prices">
                     <h3>
-                        ${Math.round((attributesPath.price + 20) * 100) / 100}
+                        {new Intl.NumberFormat("pt-BR", {
+                            style: "currency",
+                            currency: "USD",
+                        }).format(((attributesPath.price + 20) * 100) / 100)}
                     </h3>
-                    <h3>${attributesPath.price}</h3>
+                    <h3>
+                        {new Intl.NumberFormat("pt-BR", {
+                            style: "currency",
+                            currency: "USD",
+                        }).format(attributesPath.price)}
+                    </h3>
                 </div>
             </CardComponent>
         </Link>
