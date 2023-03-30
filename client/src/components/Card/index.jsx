@@ -1,8 +1,6 @@
 import { CardComponent } from "./styles.js";
 import { Link } from "react-router-dom";
 
-const url = "http://localhost:1337";
-
 export function Card({ item }) {
     const attributesPath = item?.attributes;
     const img = attributesPath.img?.data?.attributes.url;
@@ -14,9 +12,17 @@ export function Card({ item }) {
             <CardComponent>
                 <div className="image">
                     {attributesPath.isNew && <span>New Season</span>}
-                    <img src={url + img} alt="" className="mainImg" />
+                    <img
+                        src={import.meta.env.VITE_APP_UPLOAD_URL + img}
+                        alt=""
+                        className="mainImg"
+                    />
                     {attributesPath.img2.data && (
-                        <img src={url + img2} alt="" className="secondImg" />
+                        <img
+                            src={import.meta.env.VITE_APP_UPLOAD_URL + img2}
+                            alt=""
+                            className="secondImg"
+                        />
                     )}
                 </div>
                 <h2>{attributesPath.title}</h2>
