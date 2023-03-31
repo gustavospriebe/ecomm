@@ -5,7 +5,6 @@ export function Card({ item }) {
     const attributesPath = item?.attributes;
     const img = attributesPath.img?.data?.attributes.url;
     const img2 = attributesPath?.img2?.data?.attributes.url;
-    console.log(item);
 
     return (
         <Link className="link" to={`/product/${item.id}`}>
